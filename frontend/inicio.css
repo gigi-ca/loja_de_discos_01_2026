@@ -1,0 +1,305 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap');
+
+:root {
+    --vinho: #722F37;
+    --creme: #F3E9D7;
+    --dourado: #C2A15D;
+    --marrom: #8C6552;
+    --escuro: #4A3428;
+    --branco: #FFFCF5;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    background: var(--creme);
+    color: var(--escuro);
+    font-family: 'DM Sans', sans-serif;
+}
+.cabecalho {
+    min-height: 88px;
+    padding: 16px 4%;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 25px;
+    background: var(--branco);
+    border-bottom: 1px solid #E4D5BD;
+}
+.marca {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    color: var(--vinho);
+    text-decoration: none;
+    flex-shrink: 0;
+}
+.icone-marca {
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: var(--vinho);
+    color: var(--creme);
+    font-size: 29px;
+    box-shadow: 3px 3px 0 var(--dourado);
+}
+.marca strong,
+.marca small {
+    display: block;
+}
+.marca strong {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+}
+.marca small {
+    color: var(--marrom);
+    font-size: 11px;
+    margin-top: 3px;
+}
+.menu {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+}
+.menu a {
+    padding: 11px 13px;
+    border-radius: 7px;
+    color: var(--escuro);
+    text-decoration: none;
+    font-size: 12px;
+    font-weight: 600;
+    white-space: nowrap;
+    transition: 0.2s;
+}
+.menu a:hover {
+    background: var(--creme);
+    color: var(--vinho);
+}
+.usuario {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    flex-shrink: 0;
+}
+.avatar {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: #E8D6B5;
+    color: var(--vinho);
+    font-size: 22px;
+}
+.dados-usuario span,
+.dados-usuario strong {
+    display: block;
+}
+.dados-usuario span {
+    color: var(--marrom);
+    font-size: 10px;
+}
+.dados-usuario strong {
+    margin-top: 3px;
+    font-size: 13px;
+}
+.botao-sair {
+    padding: 10px 12px;
+    display: flex;
+    align-items: center;
+    gap: 7px;
+    border: 1px solid #D8C5A7;
+    border-radius: 7px;
+    background: transparent;
+    color: var(--vinho);
+    font-family: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: 0.2s;
+}
+.botao-sair:hover {
+    background: var(--vinho);
+    color: var(--creme);
+    border-color: var(--vinho);
+}
+.conteudo {
+    width: 100%;
+    max-width: 1250px;
+    margin: 0 auto;
+    padding: 45px 40px 20px;
+}
+.apresentacao {
+    min-height: 300px;
+    padding: 48px 55px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 35px;
+    background: var(--vinho);
+    color: var(--creme);
+    border-radius: 12px;
+    position: relative;
+    overflow: hidden;
+}
+.texto-apresentacao {
+    max-width: 580px;
+    position: relative;
+    z-index: 1;
+}
+.etiqueta {
+    display: inline-block;
+    color: var(--dourado);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.texto-apresentacao h1 {
+    margin-top: 18px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(36px, 4vw, 49px);
+    line-height: 1.2;
+}
+.texto-apresentacao h1 span {
+    color: var(--dourado);
+}
+.texto-apresentacao p {
+    max-width: 440px;
+    margin-top: 17px;
+    color: #F3E9D7D9;
+    font-size: 14px;
+    line-height: 1.8;
+}
+.linha-decorativa {
+    width: 65px;
+    height: 3px;
+    margin-top: 25px;
+    background: var(--dourado);
+}
+.mensagem-lateral {
+    width: 245px;
+    padding: 25px;
+    border-left: 1px solid #F3E9D755;
+    flex-shrink: 0;
+}
+.aspas {
+    color: var(--dourado);
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 55px;
+    line-height: 0.8;
+}
+.mensagem-lateral p {
+    margin-top: 10px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 19px;
+    line-height: 1.6;
+}
+.assinatura {
+    display: block;
+    margin-top: 22px;
+    color: var(--dourado);
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 2px;
+}
+.rodape {
+    margin-top: 35px;
+    padding: 22px 0;
+    border-top: 1px solid #DCCBB1;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    color: var(--marrom);
+}
+.rodape > span:first-child {
+    font-size: 23px;
+    color: var(--vinho);
+}
+.rodape p {
+    font-size: 11px;
+}
+.rodape > span:last-child {
+    margin-left: auto;
+    font-size: 9px;
+    letter-spacing: 1.5px;
+}
+
+@media (max-width: 1100px) {
+    .cabecalho {
+        flex-wrap: wrap;
+    }
+    .menu {
+        order: 3;
+        width: 100%;
+        justify-content: flex-start;
+        border-top: 1px solid #E4D5BD;
+        padding-top: 10px;
+    }
+}
+
+@media (max-width: 800px) {
+    .conteudo {
+        padding: 25px 20px;
+    }
+    .apresentacao {
+        padding: 35px;
+    }
+    .mensagem-lateral {
+        width: 200px;
+    }
+}
+
+@media (max-width: 600px) {
+    .cabecalho {
+        padding: 18px 20px;
+    }
+    .usuario {
+        width: 100%;
+    }
+    .menu {
+        flex-direction: column;
+        align-items: stretch;
+        gap: 3px;
+    }
+    .menu a {
+        white-space: normal;
+    }
+    .apresentacao {
+        padding: 30px 25px;
+    }
+    .mensagem-lateral {
+        display: none;
+    }
+    .texto-apresentacao h1 {
+        font-size: 36px;
+    }
+    .titulo-secao {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+    .titulo-secao h2 {
+        font-size: 25px;
+    }
+    .cartoes-acoes {
+        grid-template-columns: 1fr;
+    }
+    .cartao-acao {
+        min-height: 245px;
+    }
+    .rodape {
+        flex-wrap: wrap;
+    }
+    .rodape > span:last-child {
+        width: 100%;
+        margin-left: 0;
+    }
+}

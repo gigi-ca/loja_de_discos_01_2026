@@ -1,0 +1,466 @@
+
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@500;600;700;800&display=swap');
+
+:root {
+    --vinho: #722F37;
+    --creme: #F3E9D7;
+    --dourado: #C2A15D;
+    --marrom: #8C6552;
+    --escuro: #4A3428;
+}
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+body {
+    min-height: 100vh;
+    font-family: 'DM Sans', sans-serif;
+    background: var(--creme);
+    color: var(--escuro);
+}
+.pagina-login {
+    min-height: 100vh;
+    display: grid;
+    grid-template-columns: 44% 56%;
+}
+.lado-login {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px;
+    background: var(--creme);
+    border-left: 9px solid var(--dourado);
+}
+.cartao-login {
+    width: 100%;
+    max-width: 430px;
+}
+.icone-musica {
+    width: 54px;
+    height: 54px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--vinho);
+    color: var(--creme);
+    border-radius: 50%;
+    box-shadow: 4px 4px 0 var(--dourado);
+    font-family: Georgia, serif;
+    font-size: 35px;
+    margin-bottom: 32px;
+}
+.identificacao {
+    color: var(--marrom);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    margin-bottom: 12px;
+}
+h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    color: var(--vinho);
+    font-size: clamp(38px, 4vw, 52px);
+    line-height: 1.15;
+    margin-bottom: 14px;
+}
+.subtitulo {
+    color: var(--marrom);
+    font-size: 15px;
+    line-height: 1.8;
+    margin-bottom: 38px;
+}
+form label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 9px;
+}
+.campo {
+    height: 55px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 13px;
+    padding: 0 15px;
+    border: 1px solid #C8B393;
+    border-radius: 9px;
+    margin-bottom: 25px;
+    transition: border-color 0.2s, box-shadow 0.2s;
+}
+.campo:focus-within {
+    border-color: var(--vinho);
+    box-shadow: 0 0 0 3px #722F3715;
+}
+.campo input {
+    width: 100%;
+    min-width: 0;
+    height: 100%;
+    border: none;
+    outline: none;
+    background: transparent;
+    color: var(--escuro);
+    font-family: inherit;
+    font-size: 14px;
+}
+.campo input::placeholder {
+    color: #9B816A;
+}
+.campo input:-webkit-autofill,
+.campo input:-webkit-autofill:hover,
+.campo input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--escuro);
+    transition: background-color 99999s ease-out;
+    box-shadow: 0 0 0 1000px var(--creme) inset;
+}
+.mostrar-senha {
+    border: none;
+    background: transparent;
+    color: var(--marrom);
+    cursor: pointer;
+    font-size: 19px;
+    padding: 5px;
+}
+.mostrar-senha:hover {
+    color: var(--vinho);
+}
+#mensagemErro {
+    color: var(--vinho);
+    font-size: 13px;
+    line-height: 1.5;
+    margin-bottom: 15px;
+}
+#mensagemErro:empty {
+    display: none;
+}
+.botao-entrar {
+    width: 100%;
+    height: 55px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 12px;
+    background: var(--vinho);
+    color: var(--creme);
+    border: 1px solid var(--vinho);
+    border-radius: 9px;
+    font-family: inherit;
+    font-size: 15px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background 0.25s, transform 0.25s;
+}
+.botao-entrar span {
+    font-size: 20px;
+    transition: transform 0.25s;
+}
+.botao-entrar:hover {
+    background: var(--escuro);
+    border-color: var(--escuro);
+}
+.botao-entrar:hover span {
+    transform: translateX(4px);
+}
+.botao-entrar:disabled {
+    opacity: 0.65;
+    cursor: wait;
+}
+.rodape {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    margin-top: 35px;
+    color: var(--marrom);
+}
+.rodape p {
+    font-size: 11px;
+    text-align: center;
+    white-space: nowrap;
+}
+.rodape span {
+    height: 1px;
+    flex: 1;
+    background: #D7C5A8;
+}
+.lado-vinil {
+    min-height: 100vh;
+    padding: 55px 8%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+    overflow: hidden;
+    background:
+        radial-gradient(ellipse at 50% 45%, #873B43 0%, transparent 70%),
+        var(--vinho);
+    color: var(--creme);
+}
+.lado-vinil::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    opacity: 0.12;
+    pointer-events: none;
+    background: repeating-linear-gradient(
+        120deg,
+        transparent 0,
+        transparent 5px,
+        var(--escuro) 6px,
+        transparent 7px
+    );
+}
+.cabecalho-vinil,
+.composicao,
+.rodape-vinil {
+    position: relative;
+    z-index: 1;
+}
+.cabecalho-vinil > p:first-child {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    font-size: 10px;
+    letter-spacing: 3px;
+    font-weight: 700;
+}
+.cabecalho-vinil > p:first-child span {
+    height: 1px;
+    width: 75px;
+    background: #F3E9D780;
+}
+.cabecalho-vinil h2 {
+    margin-top: 20px;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(55px, 7vw, 85px);
+    line-height: 0.95;
+    letter-spacing: -4px;
+}
+.cabecalho-vinil h2 span {
+    color: var(--dourado);
+}
+.frase-vinil {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 20px;
+    margin-top: 12px;
+}
+.composicao {
+    width: 100%;
+    max-width: 550px;
+    aspect-ratio: 1 / 0.9;
+    margin: 15px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+.disco {
+    position: absolute;
+    width: 75%;
+    aspect-ratio: 1;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+    border-radius: 50%;
+    background:
+        repeating-radial-gradient(
+            circle,
+            #161311 0px,
+            #161311 2px,
+            #302922 3px,
+            #100E0C 4px,
+            #24201C 5px,
+            #100E0C 7px
+        );
+    box-shadow: 0 22px 40px #2C151A70;
+}
+.disco::after {
+    content: "";
+    position: absolute;
+    inset: 4%;
+    border: 1px solid #FFFFFF15;
+    border-radius: 50%;
+}
+.linhas-disco {
+    position: absolute;
+    inset: 10%;
+    border: 1px solid #FFFFFF10;
+    border-radius: 50%;
+}
+.centro-disco {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 31%;
+    aspect-ratio: 1;
+    transform: translate(-50%, -50%);
+    border-radius: 50%;
+    background: var(--dourado);
+    color: var(--vinho);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+.centro-disco > span {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(18px, 2.5vw, 30px);
+    font-weight: 800;
+}
+.centro-disco small {
+    font-size: 6px;
+    letter-spacing: 1px;
+    margin-top: 3px;
+}
+.furo-disco {
+    width: 7px;
+    height: 7px;
+    border-radius: 50%;
+    background: var(--escuro);
+    margin-top: 7px;
+}
+.capa-disco {
+    position: absolute;
+    left: 2%;
+    top: 50%;
+    transform: translateY(-50%) rotate(-5deg);
+    width: 76%;
+    aspect-ratio: 0.88;
+    overflow: hidden;
+    background: var(--creme);
+    color: var(--vinho);
+    border: 1px solid #D8C19A;
+    box-shadow: 0 20px 40px #2C151A65;
+}
+.informacao-capa {
+    position: absolute;
+    top: 9%;
+    left: 9%;
+    z-index: 2;
+}
+.informacao-capa p {
+    font-size: 8px;
+    letter-spacing: 2px;
+    font-weight: 700;
+}
+.informacao-capa h3 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(48px, 7vw, 78px);
+    line-height: 1.05;
+    margin-top: 10px;
+    letter-spacing: -3px;
+}
+.informacao-capa h4 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: clamp(17px, 2.2vw, 25px);
+    line-height: 1.25;
+    margin-top: 4px;
+}
+.sol {
+    position: absolute;
+    top: 38%;
+    right: 8%;
+    width: 38%;
+    aspect-ratio: 1;
+    border-radius: 50%;
+    background: var(--dourado);
+}
+.ondas {
+    position: absolute;
+    top: 57%;
+    left: -12%;
+    width: 130%;
+    height: 48%;
+    transform: rotate(-10deg);
+}
+.onda {
+    position: absolute;
+    width: 120%;
+    height: 50%;
+    border-radius: 50% 45% 0 0;
+    border-top: 4px solid var(--creme);
+}
+.onda-vinho {
+    top: 0;
+    background: var(--vinho);
+}
+.onda-dourada {
+    top: 29%;
+    background: var(--dourado);
+}
+.onda-marrom {
+    top: 58%;
+    background: var(--marrom);
+}
+.texto-final-capa {
+    position: absolute;
+    bottom: 5%;
+    left: 8%;
+    right: 8%;
+    display: flex;
+    justify-content: space-between;
+    gap: 5px;
+    z-index: 2;
+    color: var(--creme);
+    font-size: 7px;
+    font-weight: 700;
+    letter-spacing: 1.5px;
+}
+.rodape-vinil {
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    font-size: 9px;
+    letter-spacing: 2px;
+}
+.ponto {
+    color: var(--dourado);
+}
+.rodape-vinil div {
+    height: 1px;
+    flex: 1;
+    margin-left: 10px;
+    background: #F3E9D750;
+}
+@media (max-width: 900px) {
+    .pagina-login {
+        grid-template-columns: 1fr;
+    }
+    .lado-login {
+        min-height: 100vh;
+        padding: 45px 25px;
+    }
+    .cartao-login {
+        max-width: 430px;
+    }
+    .lado-vinil {
+        display: none;
+    }
+}
+
+@media (min-width: 901px) and (max-height: 700px) {
+    .lado-login {
+        padding-top: 25px;
+        padding-bottom: 25px;
+    }
+    .icone-musica {
+        margin-bottom: 18px;
+    }
+    .subtitulo {
+        margin-bottom: 22px;
+    }
+    .campo {
+        margin-bottom: 17px;
+    }
+    .rodape {
+        margin-top: 22px;
+    }
+    .lado-vinil {
+        padding-top: 30px;
+        padding-bottom: 30px;
+    }
+    .composicao {
+        max-height: 55vh;
+    }
+}

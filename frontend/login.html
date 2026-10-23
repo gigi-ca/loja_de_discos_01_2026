@@ -1,0 +1,95 @@
+
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <link rel="stylesheet" href="login.css">
+</head>
+<body>
+
+    <main class="pagina-login">
+
+        <section class="lado-login">
+            <div class="cartao-login">
+                <div class="icone-musica">♫</div>
+                <p class="identificacao">SONS NOSTÁLGICOS · ACESSO</p>
+                <h1>Bem-vindo!</h1>
+                <p class="subtitulo">A música começa com você. Entre para continuar.</p>
+                <form id="formularioLogin">
+                    <label for="email">E-mail</label>
+                    <div class="campo">
+                        <input type="email" id="email" placeholder="Digite seu e-mail" autocomplete="username" required>
+                    </div>
+
+                    <label for="senha">Senha</label>
+                    <div class="campo">
+                        <input type="password" id="senha" placeholder="Digite sua senha" autocomplete="current-password" required>
+                        <button type="button" class="mostrar-senha" id="mostrarSenha"aria-label="Mostrar senha">◉</button>
+                    </div>
+                    <p id="mensagemErro" role="alert" aria-live="polite"></p>
+                    <button type="submit" class="botao-entrar">Entrar <span aria-hidden="true">→</span></button>
+                </form>
+
+                <div class="rodape">
+                    <span></span>
+                    <p>Acesso restrito a usuários autorizados.</p>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+        <section class="lado-vinil" aria-label="Coleção de discos de MPB">
+            <header class="cabecalho-vinil">
+                <p>COLEÇÃO MUSICAL <span></span></p>
+                <h2>MPB<span>.</span></h2>
+                <p class="frase-vinil">É sempre uma boa ideia.</p>
+            </header>
+            <div class="composicao">
+                <div class="disco">
+                    <div class="linhas-disco"></div>
+                    <div class="centro-disco">
+                        <span>MPB</span>
+                        <small>MÚSICA BRASILEIRA</small>
+                        <div class="furo-disco"></div>
+                    </div>
+                </div>
+
+                <div class="capa-disco">
+                    <div class="informacao-capa">
+                        <p>EDIÇÃO ESPECIAL · Nº 01</p>
+                        <h3>MPB</h3>
+                        <h4>Memórias<br>em cada nota.</h4>
+                    </div>
+
+                    <div class="sol"></div>
+
+                    <div class="ondas">
+                        <div class="onda onda-vinho"></div>
+                        <div class="onda onda-dourada"></div>
+                        <div class="onda onda-marrom"></div>
+                    </div>
+
+                    <div class="texto-final-capa">
+                        <span>BRASIL</span>
+                        <span>DESDE SEMPRE, MÚSICA.</span>
+                    </div>
+                </div>
+
+            </div>
+
+            <footer class="rodape-vinil">
+                <span>VINIL</span>
+                <span class="ponto">•</span>
+                <span>CULTURA</span>
+                <span class="ponto">•</span>
+                <span>BRASIL</span>
+                <div></div>
+                <span>01 / 07</span>
+            </footer>
+        </section>
+    </main>
+
+    <script src="login.js"></script>
+</body>
+</html>

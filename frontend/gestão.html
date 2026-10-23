@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestão de acervo e vendas</title>
+    <link rel="stylesheet" href="gestão.css">
+</head>
+<body>
+    <header class="cabecalho">
+        <a href="inicio.html" class="marca">
+            <span class="icone-marca">♫</span>
+            <span>
+                <strong>Som Brasileiro</strong>
+                <small>Acervo musical</small>
+            </span>
+        </a>
+        <a href="inicio.html" class="botao-voltar">← Voltar ao início</a>
+    </header>
+
+    <main class="conteudo">
+        <section class="introducao">
+            <span class="etiqueta">CONTROLE DE ESTOQUE</span>
+            <h1>Gestão de Acervo<span>.</span></h1>
+            <p>Organize seus discos e registre entradas e saídas do estoque.</p>
+        </section>
+
+        <section class="cartao">
+            <span class="numero-secao">01 / MOVIMENTAÇÃO</span>
+            <h2>Registrar movimentação</h2>
+            <p class="descricao">Selecione o disco e informe os dados da operação.</p>
+
+            <form id="formularioMovimentacao">
+                <div class="campos">
+                    <div class="campo">
+                        <label for="disco">Disco *</label>
+                        <select id="disco" required>
+                            <option value="">Carregando discos...</option>
+                        </select>
+                    </div>
+
+                    <div class="campo">
+                        <label for="tipo">Tipo de movimentação *</label>
+                        <select id="tipo" required>
+                            <option value="">Selecione</option>
+                            <option value="REPOSICAO">Reposição / Compra</option>
+                            <option value="VENDA">Venda</option>
+                        </select>
+                    </div>
+                    <div class="campo">
+                        <label for="quantidade">Quantidade *</label>
+                        <input type="number" id="quantidade"
+                            min="1" step="1" placeholder="Ex.: 3" required>
+                    </div>
+                    <div class="campo">
+                        <label for="data">Data da movimentação *</label>
+                        <input type="date" id="data" required>
+                    </div>
+                </div>
+                <div id="resumoEstoque" class="resumo">
+                    Selecione um disco para consultar o estoque atual.
+                </div>
+
+                <button type="submit" class="botao-principal">Registrar movimentação</button>
+                <p id="mensagem" role="status"></p>
+            </form>
+        </section>
+
+        <section class="cartao">
+            <div class="titulo-lista">
+                <div>
+                    <span class="numero-secao">02 / ACERVO</span>
+                    <h2>Discos cadastrados</h2>
+                    <p class="descricao">Lista organizada em ordem alfabética.</p>
+                </div>
+                <span id="totalDiscos" class="contador">0 discos</span>
+            </div>
+            <div class="busca">
+                <label for="busca">Buscar disco</label>
+                <input type="search" id="busca"
+                    placeholder="Digite o título ou artista...">
+            </div>
+            <div class="tabela-rolagem">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Disco</th>
+                            <th>Artista</th>
+                            <th>Estoque atual</th>
+                            <th>Estoque mínimo</th>
+                            <th>Situação</th>
+                        </tr>
+                    </thead>
+                    <tbody id="listaDiscos">
+                        <tr>
+                            <td colspan="5" class="mensagem-tabela">
+                                Carregando acervo...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <footer class="rodape">
+            <span>♫</span>
+            <p>Som Brasileiro · Valorizando a música nacional.</p>
+        </footer>
+    </main>
+    <script src="gestão.js"></script>
+</body>
+</html>
