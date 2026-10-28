@@ -1,0 +1,452 @@
+type: collection.insomnia.rest/5.0
+schema_version: "5.1"
+name: Backend Aula
+meta:
+  id: wrk_71667c11c5974630a6d3db08fd96b2d5
+  created: 1793184610547
+  modified: 1793184610547
+  description: ""
+collection:
+  - name: discos
+    meta:
+      id: fld_b8f33cea52bd4f71b7120a3461f134ba
+      created: 1793184610551
+      modified: 1793184610551
+      sortKey: -1793184610551
+      description: ""
+    children:
+      - name: Usuario
+        meta:
+          id: fld_2ea578a009b646d2bfb13de208d94db7
+          created: 1793184610554
+          modified: 1793184610554
+          sortKey: -1793184610554
+          description: ""
+        children:
+          - url: http://localhost:3000/usuario/listar
+            name: Listar
+            meta:
+              id: req_0ca86e45e14743e085ac1df24d97777b
+              created: 1793184610555
+              modified: 1793184610555
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610555
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/usuario/buscar/3
+            name: Buscar
+            meta:
+              id: req_fa560f57a1384630be2673c357843139
+              created: 1793184610556
+              modified: 1793184891007
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610556
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/usuario/cadastrar
+            name: Cadastrar
+            meta:
+              id: req_3979fac160ac4103ba4d28bbcbb5c76e
+              created: 1793184610557
+              modified: 1793184918801
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610557
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "nome": "eu",
+                  "email": "eu@email.com",
+                  "senha": "123"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/usuario/atualizar/1
+            name: Atualizar
+            meta:
+              id: req_03708d846030410ebeb61b030dade8fa
+              created: 1793184610558
+              modified: 1793184936617
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610558
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                		"nome": "Ana Maria",
+                		"email": "ana@email.com",
+                		"senha": "1234"
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/usuario/excluir/2
+            name: Excluir
+            meta:
+              id: req_85f8fe49a2e44d2ebd60081b7fcb29a6
+              created: 1793184610560
+              modified: 1793184833927
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610560
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Disco
+        meta:
+          id: fld_788d3f20674c466a99e9c8fa67aeaa40
+          created: 1793184610560
+          modified: 1793184610560
+          sortKey: -1793184610560
+          description: ""
+        children:
+          - url: http://localhost:3000/disco/listar
+            name: Listar
+            meta:
+              id: req_1937a7a374804cc58547aea9509fd84d
+              created: 1793184610561
+              modified: 1793184610561
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610561
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/disco/buscar/:id
+            name: Buscar
+            meta:
+              id: req_027a94f6502d4dedaee610162b838ffa
+              created: 1793184610562
+              modified: 1793184610562
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610562
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/disco/cadastrar
+            name: Cadastrar
+            meta:
+              id: req_ebfbc8a988f14599a6db70ea39783998
+              created: 1793184610562
+              modified: 1793185015649
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610562
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "titulo": "teste",
+                  "artista": "teste",
+                  "precoCusto": 1,
+                  "quantidade": 1,
+                  "estoqueMinimo": 0
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/disco/atualizar/8
+            name: Atualizar
+            meta:
+              id: req_93c626adad384a3f98304cf206e1e5b5
+              created: 1793184610563
+              modified: 1793184994907
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610563
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                 "titulo": "AM",
+                		"artista": "Arctic Monkeys",
+                		"precoCusto": 130,
+                		"quantidade": 9,
+                		"estoqueMinimo": 4
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/disco/excluir/2
+            name: Excluir
+            meta:
+              id: req_c25282f54606405f8c14cd38d1dcd632
+              created: 1793184610564
+              modified: 1793184963437
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610564
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+      - name: Movimentacao
+        meta:
+          id: fld_6d950e67296e4a928eb4a5ac9365c840
+          created: 1793184610565
+          modified: 1793184610565
+          sortKey: -1793184610565
+          description: ""
+        children:
+          - url: http://localhost:3000/movimentacao/listar
+            name: Listar
+            meta:
+              id: req_1d3f8f937e47463ebcccc70c364f4131
+              created: 1793184610565
+              modified: 1793184610565
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610565
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/movimentacao/buscar/9
+            name: Buscar
+            meta:
+              id: req_a44cbdc91f774585a3ecc4a870a18b6f
+              created: 1793184610567
+              modified: 1793185028881
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610567
+            method: GET
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/movimentacao/cadastrar
+            name: Cadastrar
+            meta:
+              id: req_8a03e6aa2c884cabbd9a45d5675f1669
+              created: 1793184610568
+              modified: 1793185117326
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610568
+            method: POST
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                	"tipo": "VENDA",
+                  "quantidade": 10,
+                  "data": "2026-10-23T18:02:04.166Z",
+                  "usuarioId": 9,
+                  "discoId": 9
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/movimentacao/atualizar/3
+            name: Atualizar
+            meta:
+              id: req_adb6470286204407923d112c496fc068
+              created: 1793184610569
+              modified: 1793185064784
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610569
+            method: PUT
+            body:
+              mimeType: application/json
+              text: |-
+                {
+                  "tipo": "VENDA",
+                	"quantidade": 3,
+                	"data": "2026-10-09T10:00:00.000Z",
+                	"usuarioId": 4,
+                	"discoId": 9
+                }
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+          - url: http://localhost:3000/movimentacao/excluir/7
+            name: Excluir
+            meta:
+              id: req_d2f4a64aa68a499daa0c11e195a1a323
+              created: 1793184610569
+              modified: 1793184861257
+              isPrivate: false
+              description: ""
+              sortKey: -1793184610569
+            method: DELETE
+            body:
+              mimeType: application/json
+              text: ""
+            headers:
+              - name: Content-Type
+                value: application/json
+            settings:
+              renderRequestBody: true
+              encodeUrl: true
+              followRedirects: global
+              cookies:
+                send: true
+                store: true
+              rebuildPath: true
+cookieJar:
+  name: Default Jar
+  meta:
+    id: jar_1647a49e65991daa9c81aac0bb4b9d69b3523624
+    created: 1793184610630
+    modified: 1793184610630
+environments:
+  name: Base Environment
+  meta:
+    id: env_1647a49e65991daa9c81aac0bb4b9d69b3523624
+    created: 1793184610570
+    modified: 1793184610570
+    isPrivate: false

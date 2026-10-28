@@ -1,6 +1,6 @@
 
-const API_DISCOS = "http://localhost:3000/discos";
-const API_MOVIMENTACOES = "http://localhost:3000/movimentacoes";
+const API_DISCOS = "http://localhost:3000/disco/listar";
+const API_MOVIMENTACOES = "http://localhost:3000/movimentacao/cadastrar";
 
 const formulario = document.getElementById("formularioMovimentacao");
 const campoDisco = document.getElementById("disco");
@@ -11,6 +11,7 @@ const listaDiscos = document.getElementById("listaDiscos");
 const mensagem = document.getElementById("mensagem");
 const resumoEstoque = document.getElementById("resumoEstoque");
 const campoBusca = document.getElementById("busca");
+const usuario = JSON.parse(sessionStorage.getItem("usuario"));
 
 let discos = [];
 
@@ -20,36 +21,17 @@ function mostrarMensagem(texto, tipo) {
 }
 
 function ordenarDiscos(lista) {
-    const ordenados = [...lista];
-
-    for (let i = 0; i < ordenados.length - 1; i++) {
-        let menor = i;
-
-        for (let j = i + 1; j < ordenados.length; j++) {
-            const nomeAtual = String(ordenados[j].nome ?? "");
-            const nomeMenor = String(ordenados[menor].nome ?? "");
-
-            if (nomeAtual.localeCompare(nomeMenor, "pt-BR", {
-                sensitivity: "base"
-            }) < 0) {
-                menor = j;
-            }
-        }
-        if (menor !== i) {
-            const temporario = ordenados[i];
-            ordenados[i] = ordenados[menor];
-            ordenados[menor] = temporario;
-        }
-    }
-    return ordenados;
+    return [...lista].sort((a, b) =>
+        a.titulo.localeCompare(b.titulo, "pt-BR")
+    );
 }
 
 function obterEstoque(disco) {
-    return Number(disco.estoque ?? 0);
+    return Number(disco.quantidade);
 }
 
 function obterEstoqueMinimo(disco) {
-    return Number(disco.estoque_minimo ?? disco.estoqueMinimo ?? 0);
+    return Number(disco.estoqueMinimo);
 }
 
 async function carregarDiscos() {
@@ -61,13 +43,9 @@ async function carregarDiscos() {
         }
 
         const dados = await resposta.json();
-        discos = Array.isArray(dados) ? dados : dados.discos;
 
-        if (!Array.isArray(discos)) {
-            throw new Error("A API não retornou uma lista de discos.");
-        }
+        discos = ordenarDiscos(dados);
 
-        discos = ordenarDiscos(discos);
         preencherSelecao();
         mostrarDiscos();
 
@@ -91,7 +69,7 @@ function preencherSelecao() {
     discos.forEach(disco => {
         const opcao = document.createElement("option");
         opcao.value = disco.id;
-        opcao.textContent = disco.nome;
+        opcao.textContent = disco.titulo;
         campoDisco.appendChild(opcao);
     });
 }
@@ -100,10 +78,10 @@ function mostrarDiscos() {
     const termo = campoBusca.value.trim().toLocaleLowerCase("pt-BR");
 
     const filtrados = discos.filter(disco => {
-        const nome = String(disco.nome ?? "").toLocaleLowerCase("pt-BR");
-        const descricao = String(disco.descricao ?? "").toLocaleLowerCase("pt-BR");
+        const titulo = disco.titulo.toLocaleLowerCase("pt-BR");
+        const artista = disco.artista.toLocaleLowerCase("pt-BR");
 
-        return nome.includes(termo) || descricao.includes(termo);
+        return titulo.includes(termo) || artista.includes(termo);
     });
 
     listaDiscos.innerHTML = "";
@@ -128,8 +106,8 @@ function mostrarDiscos() {
         const linha = document.createElement("tr");
 
         const valores = [
-            disco.nome,
-            disco.artista ?? "—",
+            disco.titulo,
+            disco.artista,
             estoque,
             minimo
         ];
@@ -142,9 +120,11 @@ function mostrarDiscos() {
 
         const celulaSituacao = document.createElement("td");
         const etiqueta = document.createElement("span");
+
         etiqueta.className = estoque < minimo
             ? "situacao baixo"
             : "situacao ok";
+
         etiqueta.textContent = estoque < minimo
             ? "Estoque abaixo do mínimo"
             : "Estoque adequado";
@@ -169,8 +149,7 @@ function atualizarResumo() {
     const minimo = obterEstoqueMinimo(disco);
 
     resumoEstoque.textContent =
-        `Estoque atual: ${estoque} disco(s). ` +
-        `Estoque mínimo: ${minimo} disco(s).`;
+        `Estoque atual: ${estoque} disco(s). Estoque mínimo: ${minimo} disco(s).`;
 }
 
 campoDisco.addEventListener("change", atualizarResumo);
@@ -178,9 +157,23 @@ campoBusca.addEventListener("input", mostrarDiscos);
 
 campoTipo.addEventListener("change", () => {
     if (campoTipo.value === "VENDA") {
-        campoQuantidade.setAttribute("max", "999999");
+        const disco = discos.find(item => String(item.id) === campoDisco.value);
+
+        if (disco) {
+            campoQuantidade.max = disco.quantidade;
+        }
     } else {
         campoQuantidade.removeAttribute("max");
+    }
+});
+
+campoDisco.addEventListener("change", () => {
+    if (campoTipo.value === "VENDA") {
+        const disco = discos.find(item => String(item.id) === campoDisco.value);
+
+        if (disco) {
+            campoQuantidade.max = disco.quantidade;
+        }
     }
 });
 
@@ -193,32 +186,31 @@ formulario.addEventListener("submit", async evento => {
     const data = campoData.value;
 
     if (!disco || !tipo || !data || campoQuantidade.value === "") {
-        alert("Preencha todos os campos da movimentação.");
+        mostrarMensagem("Preencha todos os campos da movimentação.", "erro");
         return;
     }
 
     if (!Number.isInteger(quantidade) || quantidade <= 0) {
-        alert("A quantidade deve ser um número inteiro maior que zero.");
+        mostrarMensagem("A quantidade deve ser um número inteiro maior que zero.", "erro");
         return;
     }
 
-    const estoqueAtual = obterEstoque(disco);
-    const estoqueMinimo = obterEstoqueMinimo(disco);
-
-    if (tipo === "VENDA" && quantidade > estoqueAtual) {
-        alert("Não há discos suficientes no estoque para essa venda.");
+    if (tipo === "VENDA" && quantidade > obterEstoque(disco)) {
+        mostrarMensagem("Não há discos suficientes no estoque para essa venda.", "erro");
         return;
     }
 
-    const novoEstoque = tipo === "VENDA"
-        ? estoqueAtual - quantidade
-        : estoqueAtual + quantidade;
+    if (!usuario) {
+        mostrarMensagem("Faça login para registrar movimentações.", "erro");
+        return;
+    }
 
     const dados = {
         discoId: disco.id,
+        usuarioId: usuario.id,
         tipo,
         quantidade,
-        dataMovimentacao: data
+        data: `${data}T12:00:00`
     };
 
     try {
@@ -229,34 +221,36 @@ formulario.addEventListener("submit", async evento => {
             },
             body: JSON.stringify(dados)
         });
+
+        const resultado = await resposta.json();
+
         if (!resposta.ok) {
-            const erro = await resposta.json().catch(() => ({}));
-            throw new Error(erro.mensagem || erro.message ||
-                "Não foi possível registrar a movimentação.");
+            throw new Error(resultado.erro || "Não foi possível registrar a movimentação.");
         }
 
         mostrarMensagem("Movimentação registrada com sucesso!", "sucesso");
 
         await carregarDiscos();
 
-        const discoAtualizado = discos.find(
-            item => String(item.id) === String(disco.id)
-        );
+        const discoAtualizado = discos.find(item => item.id === disco.id);
+
         if (tipo === "VENDA" && discoAtualizado) {
             const estoqueFinal = obterEstoque(discoAtualizado);
             const minimoFinal = obterEstoqueMinimo(discoAtualizado);
 
             if (estoqueFinal < minimoFinal) {
                 alert(
-                    `Atenção! O estoque de "${disco.nome}" está abaixo do mínimo configurado.\n` +
+                    `Atenção! O estoque de "${disco.titulo}" está abaixo do mínimo configurado.\n` +
                     `Estoque atual: ${estoqueFinal}.\n` +
                     `Estoque mínimo: ${minimoFinal}.`
                 );
             }
         }
+
         formulario.reset();
         campoData.value = new Date().toLocaleDateString("en-CA");
         atualizarResumo();
+
     } catch (erro) {
         mostrarMensagem(erro.message, "erro");
         console.error(erro);

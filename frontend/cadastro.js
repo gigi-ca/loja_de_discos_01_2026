@@ -1,5 +1,5 @@
 
-const API = "http://localhost:3000/discos";
+const API = "http://localhost:3000/disco";
 
 const formulario = document.getElementById("formularioDisco");
 const formularioBusca = document.getElementById("formularioBusca");
@@ -10,12 +10,9 @@ const campos = {
     id: document.getElementById("idDisco"),
     titulo: document.getElementById("titulo"),
     artista: document.getElementById("artista"),
-    ano: document.getElementById("ano"),
-    genero: document.getElementById("genero"),
-    gravadora: document.getElementById("gravadora"),
     quantidade: document.getElementById("quantidade"),
     preco: document.getElementById("preco"),
-    estado: document.getElementById("estado")
+    estoqueMinimo: document.getElementById("estoqueMinimo")
 };
 
 let discos = [];
@@ -33,32 +30,33 @@ function formatarPreco(valor) {
     });
 }
 
-async function carregarDiscos(termo = "") {
+async function carregarDiscos() {
     listaDiscos.innerHTML = `
         <tr>
-            <td colspan="8" class="mensagem-tabela">
+            <td colspan="6" class="mensagem-tabela">
                 Carregando discos...
             </td>
         </tr>
     `;
 
     try {
-        const resposta = await fetch(
-            `${API}?busca=${encodeURIComponent(termo)}`
-        );
+        const resposta = await fetch(`${API}/listar`);
+
         if (!resposta.ok) {
             throw new Error("Não foi possível carregar os discos.");
         }
+
         const dados = await resposta.json();
-        discos = Array.isArray(dados) ? dados : dados.discos;
-        if (!Array.isArray(discos)) {
-            throw new Error("A resposta da API não contém uma lista de discos.");
-        }
-        mostrarDiscos(discos);
+        discos = dados.sort((a, b) =>
+            a.titulo.localeCompare(b.titulo, "pt-BR")
+        );
+
+        mostrarDiscos();
+
     } catch (erro) {
         listaDiscos.innerHTML = `
             <tr>
-                <td colspan="8" class="mensagem-tabela">
+                <td colspan="6" class="mensagem-tabela">
                     Não foi possível carregar os discos.
                 </td>
             </tr>
@@ -69,14 +67,23 @@ async function carregarDiscos(termo = "") {
     }
 }
 
-function mostrarDiscos(lista) {
+function mostrarDiscos() {
+    const termo = termoAtual.toLocaleLowerCase("pt-BR");
+
+    const filtrados = discos.filter(disco =>
+        disco.titulo.toLocaleLowerCase("pt-BR").includes(termo) ||
+        disco.artista.toLocaleLowerCase("pt-BR").includes(termo)
+    );
+
     listaDiscos.innerHTML = "";
+
     document.getElementById("totalDiscos").textContent =
-        `${lista.length} ${lista.length === 1 ? "disco" : "discos"}`;
-    if (lista.length === 0) {
+        `${filtrados.length} ${filtrados.length === 1 ? "disco" : "discos"}`;
+
+    if (filtrados.length === 0) {
         listaDiscos.innerHTML = `
             <tr>
-                <td colspan="8" class="mensagem-tabela">
+                <td colspan="6" class="mensagem-tabela">
                     Nenhum disco encontrado.
                 </td>
             </tr>
@@ -84,22 +91,20 @@ function mostrarDiscos(lista) {
         return;
     }
 
-    lista.forEach(disco => {
+    filtrados.forEach(disco => {
         const linha = document.createElement("tr");
 
         const valores = [
             disco.titulo,
             disco.artista,
-            disco.ano,
-            disco.genero,
             disco.quantidade,
-            formatarPreco(disco.preco),
-            disco.estado
+            disco.estoqueMinimo,
+            formatarPreco(disco.precoCusto)
         ];
 
         valores.forEach(valor => {
             const celula = document.createElement("td");
-            celula.textContent = valor ?? "—";
+            celula.textContent = valor;
             linha.appendChild(celula);
         });
 
@@ -130,32 +135,28 @@ function mostrarDiscos(lista) {
 function validarDisco() {
     const titulo = campos.titulo.value.trim();
     const artista = campos.artista.value.trim();
-    const ano = Number(campos.ano.value);
     const quantidade = Number(campos.quantidade.value);
     const preco = Number(campos.preco.value);
+    const estoqueMinimo = Number(campos.estoqueMinimo.value);
 
-    if (!titulo || !artista || !campos.ano.value ||
-        !campos.genero.value || !campos.estado.value ||
-        campos.quantidade.value === "" || campos.preco.value === "") {
-        alert("Preencha todos os campos obrigatórios.");
-        return false;
-    }
-
-    if (!Number.isInteger(ano) || ano < 1900 || ano > 2100) {
-        alert("Informe um ano válido entre 1900 e 2100.");
-        campos.ano.focus();
+    if (!titulo || !artista || campos.quantidade.value === "" ||
+        campos.preco.value === "" || campos.estoqueMinimo.value === "") {
+        mostrarMensagem("Preencha todos os campos obrigatórios.", "erro");
         return false;
     }
 
     if (!Number.isInteger(quantidade) || quantidade < 0) {
-        alert("A quantidade deve ser um número inteiro igual ou maior que zero.");
-        campos.quantidade.focus();
+        mostrarMensagem("A quantidade deve ser um número inteiro igual ou maior que zero.", "erro");
         return false;
     }
 
     if (!Number.isFinite(preco) || preco <= 0) {
-        alert("Informe um preço maior que zero.");
-        campos.preco.focus();
+        mostrarMensagem("Informe um preço maior que zero.", "erro");
+        return false;
+    }
+
+    if (!Number.isInteger(estoqueMinimo) || estoqueMinimo < 0) {
+        mostrarMensagem("O estoque mínimo deve ser um número inteiro igual ou maior que zero.", "erro");
         return false;
     }
 
@@ -166,12 +167,9 @@ function obterDadosFormulario() {
     return {
         titulo: campos.titulo.value.trim(),
         artista: campos.artista.value.trim(),
-        ano: Number(campos.ano.value),
-        genero: campos.genero.value,
-        gravadora: campos.gravadora.value.trim(),
+        precoCusto: Number(campos.preco.value),
         quantidade: Number(campos.quantidade.value),
-        preco: Number(campos.preco.value),
-        estado: campos.estado.value
+        estoqueMinimo: Number(campos.estoqueMinimo.value)
     };
 }
 
@@ -184,9 +182,10 @@ formulario.addEventListener("submit", async evento => {
 
     const id = campos.id.value;
     const editando = id !== "";
+
     const endereco = editando
-        ? `${API}/${encodeURIComponent(id)}`
-        : API;
+        ? `${API}/atualizar/${id}`
+        : `${API}/cadastrar`;
 
     try {
         const resposta = await fetch(endereco, {
@@ -196,43 +195,34 @@ formulario.addEventListener("submit", async evento => {
             },
             body: JSON.stringify(obterDadosFormulario())
         });
+
         if (!resposta.ok) {
             throw new Error("Não foi possível salvar o disco.");
         }
+
         mostrarMensagem(
             editando
                 ? "Disco atualizado com sucesso!"
                 : "Disco cadastrado com sucesso!",
             "sucesso"
         );
-        formulario.reset();
-        campos.id.value = "";
-        document.getElementById("tituloFormulario").textContent =
-            "Adicionar novo disco";
-        document.getElementById("botaoSalvar").textContent =
-            "+ Cadastrar disco";
-        document.getElementById("botaoCancelar").hidden = true;
 
-        await carregarDiscos(termoAtual);
+        cancelarEdicao();
+        await carregarDiscos();
+
     } catch (erro) {
-        mostrarMensagem(
-            "Não foi possível salvar. Verifique a conexão com o backend.",
-            "erro"
-        );
+        mostrarMensagem("Não foi possível salvar o disco.", "erro");
         console.error(erro);
     }
 });
 
 function editarDisco(disco) {
     campos.id.value = disco.id;
-    campos.titulo.value = disco.titulo ?? "";
-    campos.artista.value = disco.artista ?? "";
-    campos.ano.value = disco.ano ?? "";
-    campos.genero.value = disco.genero ?? "";
-    campos.gravadora.value = disco.gravadora ?? "";
-    campos.quantidade.value = disco.quantidade ?? "";
-    campos.preco.value = disco.preco ?? "";
-    campos.estado.value = disco.estado ?? "";
+    campos.titulo.value = disco.titulo;
+    campos.artista.value = disco.artista;
+    campos.quantidade.value = disco.quantidade;
+    campos.preco.value = disco.precoCusto;
+    campos.estoqueMinimo.value = disco.estoqueMinimo;
 
     document.getElementById("tituloFormulario").textContent = "Editar disco";
     document.getElementById("botaoSalvar").textContent = "Salvar alterações";
@@ -242,14 +232,21 @@ function editarDisco(disco) {
     campos.titulo.focus();
 }
 
-document.getElementById("botaoCancelar").addEventListener("click", () => {
+function cancelarEdicao() {
     formulario.reset();
     campos.id.value = "";
+
     document.getElementById("tituloFormulario").textContent =
         "Adicionar novo disco";
+
     document.getElementById("botaoSalvar").textContent =
         "+ Cadastrar disco";
+
     document.getElementById("botaoCancelar").hidden = true;
+}
+
+document.getElementById("botaoCancelar").addEventListener("click", () => {
+    cancelarEdicao();
     mostrarMensagem("", "");
 });
 
@@ -257,23 +254,21 @@ async function excluirDisco(id) {
     if (!confirm("Tem certeza de que deseja excluir este disco?")) {
         return;
     }
+
     try {
-        const resposta = await fetch(
-            `${API}/${encodeURIComponent(id)}`,
-            { method: "DELETE" }
-        );
+        const resposta = await fetch(`${API}/excluir/${id}`, {
+            method: "DELETE"
+        });
 
         if (!resposta.ok) {
             throw new Error("Não foi possível excluir o disco.");
         }
 
         mostrarMensagem("Disco excluído com sucesso!", "sucesso");
-        await carregarDiscos(termoAtual);
+        await carregarDiscos();
+
     } catch (erro) {
-        mostrarMensagem(
-            "Não foi possível excluir. Verifique a conexão com o backend.",
-            "erro"
-        );
+        mostrarMensagem("Não foi possível excluir o disco.", "erro");
         console.error(erro);
     }
 }
@@ -281,13 +276,13 @@ async function excluirDisco(id) {
 formularioBusca.addEventListener("submit", evento => {
     evento.preventDefault();
     termoAtual = document.getElementById("termoBusca").value.trim();
-    carregarDiscos(termoAtual);
+    mostrarDiscos();
 });
 
 document.getElementById("botaoLimpar").addEventListener("click", () => {
     document.getElementById("termoBusca").value = "";
     termoAtual = "";
-    carregarDiscos();
+    mostrarDiscos();
 });
 
 carregarDiscos();
